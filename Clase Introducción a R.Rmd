@@ -1,0 +1,1583 @@
+---
+title: "Clase Introduccion a R"
+output:
+  pdf_document: default
+  html_document: default
+date: "2022-08-08"
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+## Clase 01
+
+Link de la clase: sites.google.com/view/rinb/
+
+1.1 Instalación de R y Studio (done)
+
+1.2 Ambiente de programación
+
+R es un lenduaje de programacion que Interpreta (igual que python), a
+diferencia de un lenguaje que requiere compilación.
+
+1.3\
+Operadores artiméticos: suma +, resta -, div /, exponente \^, mayor
+menor \>\<, TRUE FALSE
+
+```{r}
+6+6
+5-1
+3/2
+5^9
+6 < 3 
+
+6 == 6 
+6 != 6 
+
+#Constantes 
+pi
+
+# funciones 
+sin(0)
+cos(0)
+tan(1)
+exp(1)
+
+#Residuo 
+5 %% 2  
+
+```
+
+1.4\
+Solve for: \> x\^2 - 3x + 2 = 0
+
+```{r}
+a = 1 
+b = -3 
+c = 2 
+(x1= (-b +sqrt(b^2 - 4*a*c))/(2*a))
+(x2= (-b -sqrt(b^2 - 4*a*c))/(2*a))
+
+
+```
+
+Binario a decimal:\
+\> 1111 = 1*2\^3 + 1*2\^2 + 1*2\^0 10110 = 1*2\^4 + 0*2\^3 + 1*2\^2 +
+1*2\^1 + 0*2\^0
+
+Decimal a binario:\
+\> 99 %% 2 = 1
+
+# Clase 2
+
+TRUE y FALSE = valores reservados, no se pueden usar como variables.\
+FALSE == F, TRUE == T\
+NA = missing value\
+NaN = not a number.\
+1/0 = Inf (reservado) 0/0 = NaN\
+1/Inf = 0 (se aproxima a cero) pi = constant 3.14
+
+Datos e información:\
+Podemos entender los datos como el conjunto completo (palabras, números,
+etc.),\
+mientras que la información se refiere a la *carnita*, los patrones que
+deseamos encontrar etc.
+
+& \| (and or)
+
+```{r}
+a=3
+b=4
+c=5
+c>b & b>a
+c>b | a>b #TRUE | FALSE = TRUE 
+```
+
+Recordando los comandos de la clase anterior:\
+ls() - list variables in memory rm() - remove variable\
+getwd() - get working dir\
+setwd() - set work dir\
+dir() - list contents of working dir
+
+R esta formado de paquetes: base, utils, graphics
+
+Tipos de datos:\
+Escalares = un solo valor 33, "pepe" Funciones\
+Vectores = se define como una secuencia de números o strings, tienen un
+orden implícito x1,x2,x3....\
+Matrices
+
+Tipos II: Num Enteros (-3,-2-1,0,1,2,3) Racionales (4/3, 1/2 ...)
+Caracteres "hola"
+
+```{r}
+class("33")   #nos dice que tipo es  
+as.integer("33")
+```
+
+paste() = sirve para unir dos variables ej. paste("Juan", 55) = Juan 55\
+lenght() = nos dice el tamaño de un vector
+
+subsetting = vector[3] nos regresa el 3 elemento de un vector.
+
+```{r}
+y = c(4,2,1,5) 
+y
+y+5  #la operacion se repite cuantas veces como la longitud del vector (se aplica a todos los elementos)
+
+y + c(2,3) #si los vectores no son del mismo tamaño como que recicla el valor a sumar.  
+
+no = c("lola", "maria", "lupe")
+which(no == "maria")   # nos dice en qué posición se encuentra el valor buscado.  
+
+no = c(no, "maria", "lupita")
+no
+which(no == "maria")   #si existen varios valores iguales, regresa todas las posiciones donde se encuentran.  
+```
+
+Crear secuencias: 3:10
+
+seq(1,10,2)\
+Crear una secuencia del 1 al 10, con incrementos de 2
+
+```{r}
+seq(1,10,2)  
+
+
+args(seq)
+
+seq(4,10, length.out = 4) #nos genera una serie de cuatro numeros equidistantes.   
+
+seq(0,150, length.out = 100 )  #length.out por default es NULL, podemos definirlo cuando queremos hacer una lista con un tamaño concreto.  
+```
+
+rnorm() = genera un vector con distribución normal
+
+```{r}
+rnorm(10)  #media=0, sd=1 genera una distribucion normal estándar.  
+rnorm(10, mean = 55, sd = 10)
+round(rnorm(10, mean = 55, sd = 10)) 
+peso <- round(rnorm(100, mean = 55, sd = 10))
+peso
+hist(peso)
+
+sum(peso < 50)  #contar cuantas personas pesan menos de 50kg  
+
+peso[peso<50] #nos regresa los valores que cumplen la condicion 
+sum(peso[peso<50])  #ahora sumamos los valores internos que cumplen con la cond menor a 50kg.   
+
+
+```
+
+Más ejemplos:
+
+```{r}
+w = c(3,2,1,4,5,6,2,1)
+w[w>2 | w<6]  # se cancela??? o por qué regresa todo?? 
+```
+
+## Funciones
+
+mean()\
+sum()\
+var()\
+sd()\
+max()\
+plot()\
+boxplot()\
+hist()\
+norm()
+
+```{r}
+x=c(3,2,4,5,3)
+y=c(2,1,4,2,6)
+x == y #comparar si hay valores iguales en ambos vectores.  
+sum(x==y)
+sum(x ==2)
+```
+
+## Clase 3 -
+
+15/08/22
+
+rscript \<..file.R..\>\
+sirve para correr R en la terminal bash?? (OS X, compartibilidad con MS2
+dudosa)\
+cat() ---- concatenate and print
+
+persp() \<- sirve para graficar datos en 3D, como terreno y montañas,
+incluido en el demo(persp).
+
+el espacio de trabajo se guarda por default en:\
+\> Users/david/.RData
+
+save(x,y, file = "xy.RData) --- guardar a un archivo los vectores x, y
+(deben estar cargados en el environment). Se guardan al workdir.\
+load("file.RData") ----- cargar un archivo RData
+
+library(lib.loc = .Library) --- muestra todos los paquetes instalados
+library(help="MASS") ---- inspeccionar paquete\
+objects(grep("base",search())) ----- otra forma de buscar
+
+```{r}
+cat("la media del vector", mean(c(2,3,4,5))) #ejemplo de concatenar y print   
+
+#img = readJPEG(source, "file.jpeg")
+#img[,,1]  #ver todas las filas, todas las columnas, la primer capa de la imagen (grayscale).   
+```
+
+Modo iterativo\
+Cuando se deja una instruccion abierta en la consola \> 3+4+5+6+ + 5
+R=23
+
+```{r}
+x=4; y =5     #se puede incluir varias instrucciones en una linea separadas con ; prefiero en markdown.   
+cat("area es =", x*y)
+```
+
+choose(n,x) ----- cuantas combinaciones se pueden hacer trunc() -
+truncate values toward zero 4.9 ---\> 4\
+runif(10) --- genera 10 valores de distribucion uniforme de 0 a 1
+
+```{r}
+runif(10)
+runif(10, min =, max = )
+```
+
+5 %/% 2 = 2 este muestra el cociente sneaky sneaky fuckers. 5 %% 2 = 1
+este es el residuo
+
+Código para saber si un número es primo ---- hacerlo en código de tarea.
+( con los operadores modulo y cociente).
+
+```{r}
+97 %% 2
+97 %% 1
+97 %% 97   
+```
+
+(0:3)\^Inf [1] 0 1 Inf Inf\
+Curioso resultado 0\^Inf = 0 1\^Inf= 1 2\^Inf= Inf ...\
+is.finite()/is.infinite()
+
+*Valores perdidos NA*
+
+```{r}
+(x <- c(1:8,NA))
+mean(x)    #cannot calculate because it contains NA   
+mean(x,na.rm=T)   #remove NA values    
+```
+
+```{r}
+x = c(2,4,2,3,5,65,22)
+(mean(x[x<15]))   #excluyendo los "outliers" 
+x[!x==2]   #los que no sean 2  
+```
+
+which(is.na(x)) --- nos dice en que posición se encuentran los NA
+
+```{r}
+vmv <- c(1:6, NA, NA, 9:12)
+which(is.na(vmv))
+vmv[is.na(vmv)] <- 0     #cambiar los valores NA, tambien se puede con condiciones x[x==5] <- 0.  
+vmv
+
+```
+
+## Clase 4 -
+
+### Vectores
+
+Vectores a partir de otros vectores
+
+```{r}
+x = 1:10 
+y = c(5,3,4,5)
+z = c(x, y)
+```
+
+A partir de operaciones lógicas
+
+```{r}
+x = c(4,1,2,4,5,3,6)
+x[-c(2,4,6)]    #remueve los elementos en las posiciones 2,4 y 6. Mas bien elige los valores que NO están en esas posiciones. 
+```
+
+## Graficas en 2D
+
+```{r}
+t = seq(0,4*pi,.1)
+y = cos(t)
+plot(t,y,type="l")    #plot por default es type dot
+# este tiene periodicidad 2pi?!
+```
+
+```{r}
+t = seq(0,4*pi,.1)
+y = cos(t) + 2*cos(2*t)
+plot(t,y,type="l") 
+```
+
+```{r}
+t = seq(0, 2*pi, length.out = 100)
+x = cos(t)
+y = sin(t)     #ecuaciones parametricas de un circulo
+plot(x,y, type='l')     #círculo de radio 1 
+x = .5*cos(t)
+y = .5*sin(t)
+points(x,y, type='l', lwd=3, col='red')    #se usa points() para agregar puntos a un plot existente
+```
+
+```{r}
+x = runif(1000)
+plot(x)
+mean(x)    #la media de una distribucion uniforme (0 a 1) es igual a 0.5
+```
+
+```{r}
+x = rnorm(1000)
+plot(x)
+mean(x)
+var(x)    #la media de una pob normalmente dist es 0 y la varianza 0 
+```
+
+```{r}
+#library(plot3D)
+#scatter3D(x,y,z, cex=3, pch=16, col="blue")  #cex changes dot size, pch changes 
+```
+
+```{r}
+cone <- function(x, y){
+sqrt(x ^ 2 + y ^ 2)
+}
+ 
+# prepare variables.
+
+x <- y <- seq(-1, 1, length = 30)
+z <- outer(x, y, cone)
+ 
+# plot the 3D surface
+persp(x, y, z)
+
+
+esfera <- function(x, y){
+sqrt(1 - x ^ 2 - y ^ 2)
+}
+ 
+# prepare variables.
+
+x <- y <- seq(-1, 1, length = 100)
+z <- outer(x, y, esfera)
+ 
+# plot the 3D surface
+persp(x, y, z)
+
+```
+
+```{r}
+t = seq(0,4*pi,.1)
+y = cos(t)
+plot(t,y,type="b", main = "seno", ylim = (c(-3,3)), col="red", pch=16 )
+text(0,-1, "esta es la figura", pos=4, srt=90, cex=2)  #srt sirve para rotar el texto, cex para magnificar los elementos graf. 
+```
+
+```{r}
+x <- 0:2*pi
+```
+
+# Clase 05
+
+Para trazar una recta tangente de una func:
+
+la pendiente es la derivada de la función \>f(x)=x\^2 - 2x + 1
+
+entonces la derivada es: \> m = 2 \* (1.5) - 2
+
+donde m=tan(theta)
+
+```{r}
+x <- seq(0,2,0.1)
+y <- x^2 -2*x +1
+plot(x,y)
+m = 2*(1.5)-2
+xx <- seq(-1,2,0.01)
+yy <- m*(xx-1.5)+0.25
+points(xx,yy)
+```
+
+# 5.1 Matrices y arreglos
+
+Una matriz se define como N columnas y N filas de números. Se puede
+decir que\
+es tamaño m\*n. Filas = observaciones, Col = variables.
+
+# Requires XQuartz 11
+
+x \<- matrix(c(4,2,3,1,4,3), ncol=2) x z \<- 1:12 dim(z) \<- c(3,4) #con
+dim se modifica la estructura del vector para convertirlo en matriz z
+fix(z)
+
+Indexing matrices
+
+```{r}
+mat <- matrix(1:12,ncol=3)
+mat[2,]
+mat[,2]
+mat[2:3,2]
+mat[,c(1,3)] #todas las filas, de la col 1 y 3 
+```
+
+### 5.2 operaciones con matrices
+
+Las matrices con distintas longitudes no pueden usarse para operaciones,
+tira error.\
+A diferencia de los vectores donde se reciclan los valores, las matrices
+no.
+
+```{r}
+A = matrix(1:6, ncol=2)
+B = matrix(c(3,2,3,2,3,2), ncol=2)
+A+B
+A-B
+A*B
+A^B
+```
+
+### 5.3 Funciones en matrices
+
+```{r}
+sqrt(A)
+B^3
+log(A)
+A %% 2 == 0 
+```
+
+# Arreglos
+
+Múltiples matrices que forman un arreglo en 3 o más dimensiones.
+
+```{r}
+x <- 1:24 
+dim(x) <- c(3,4,2) # dos matrices de 3x4 
+class(x)  #array 
+```
+
+```{r}
+mat1 <- matrix(1:12,ncol=3)
+colMeans(mat1)
+colSums(mat1)
+rowMeans(mat1)
+rowSums(mat1)
+apply(mat1, 1, mean)  # apply (var, 1 = by rows, 2= by columns, function)
+```
+
+```{r}
+library(jpeg)
+img = readJPEG("imagen.jpeg")
+dim(img)  #1118 filas, 1106 col, 3 matrices corresp a los color layers  
+img = img[,,1]   #aqui solo abrimos la matriz 1, que es el grayscale de la img. 
+image(img)
+
+```
+
+### 5.4 Funciones de usuario
+
+```{r}
+zaza <- function(tex=""){ 
+  res = paste("Hola mundo:", tex)}
+print(zaza("Juan"))
+```
+
+```{r}
+ecuac2grado <- function(a=0,b=0,c=0){
+  dif <- b^2 -4*a*c
+  if(dif >= 0){
+    x1 = (-b + sqrt(dif))/(2*a)
+    x2 = (-b - sqrt(dif))/(2*a)
+  } else {
+    x1 = Inf
+    x2 = 0 
+  }
+  res=c(x1,x2)
+}
+
+(ecuac2grado(2,2,0))
+```
+
+## 5.5 Kurtosis
+
+```{r}
+kurt <- function (x=0){
+  mx <- mean(x)
+  std <- sd(x)
+  n = length(x)
+  num = n* sum((x-mx)^4)
+  den = (n-1)^2 * std^4
+  kur <- num/den -3
+}
+kkk <- round(rnorm(100,mean=55,sd=10))
+hist(kkk)
+(kurt(kkk))
+```
+
+# Clase 06
+
+Complementando lo de matrices
+
+```{r}
+mat = matrix(1:12,ncol=3)
+res = apply(mat,1,mean)
+(matn = cbind(mat,res))  #cbind column bind para agregar col
+write.csv(matn,"mat.csv", row.names = F, col.names = F, sep=",")
+```
+
+Funciones de usuario\
+Cero factorial 0! = 1 n! = n\*(n-1)!
+
+5! = 5*4*3*2*1 = 120
+
+```{r}
+n = 8
+fact = 1
+for (i in 1:n){
+  fact = fact*i
+}
+
+factorial(8)  #checamos con la función interna de R
+```
+
+Definiendo la función de usuario para calcular factoriales
+
+```{r}
+fac <- function(n=0){
+  fact=1
+ for (i in 1:n){
+  fact = fact*i 
+ }
+  return(fact)
+}
+fac(8)
+```
+
+Funcion que genere un círculo de radio R
+
+```{r}
+circulo <- function(r = 0){
+  t <- seq(0,2*pi+0.2,0.1)
+  x <- r*cos(t)
+  y <- r*sin(t)
+  plot(x,y)
+  res <- list(x,y)
+}
+
+
+circulo(15)
+```
+
+```{r, include=FALSE}
+# genera un plot con n circulos (definido en el for 1:10)
+plot(c(-10,10), c(-10,10))
+for (i in 1:10){
+  r = runif(1,min=0.5,max=2)
+  x0=runif(1,min=-7,max=7)
+  y0=runif(1,min=-7,max=7)
+  c1=circulo(r)
+  points(x0 + c1[[1]], y0 + c1[[2]], type = "l", lwd = 4, col = i )
+}
+
+```
+
+Transformando el código anterior en una fórmula
+
+```{r, include=FALSE}
+ran_circles <- function(x){
+  plot(c(-10,10), c(-10,10))
+  for (i in 1:x){
+  r = runif(1,min=0.5,max=2)
+  x0=runif(1,min=-7,max=7)
+  y0=runif(1,min=-7,max=7)
+  c1=circulo(r)
+  points(x0 + c1[[1]], y0 + c1[[2]], type = "l", lwd = 4, col = i )
+}
+}
+#solo cambiamos el intervalo 1:10 a x para que sea definido por el usuario. 
+ran_circles(15)
+```
+
+Una funcion para leer imagenes
+
+```{r}
+library(jpeg)
+leeImg <- function(nombre='',i){
+  fil = readJPEG(paste(nombre,".jpeg",sep=''))
+  res = fil[,,i]
+}
+par(mfrow=c(2,2)) #esto es para poner varias graf en un display 
+img = leeImg('imagen',2)
+image(img)
+```
+
+# Clase 07
+
+ejercicios de examen:    Ver tarea 04  
+
+
+# Clase 08  
+
+Repasando el problema 4, como sacar los elementos de una matriz que cumplen una  
+condición. En este caso sacamos los valores en el intervalo >60 y <65.  
+```{r}
+mat <- round(matrix(runif(25,min=50, max=70), ncol=5))
+mat
+
+matn <- mat * subset(mat>=60 & mat<=65)
+matn
+
+```
+
+
+## 8.1 Data frames  
+
+Definiendo df
+Cada columna es una variable y cada fila es una observación.  
+
+```{r}
+nombres <- c('Lupe', 'Fernando', 'Juan', 'Maria', 'Sari')
+edad <- c(55, 63, 70, 55, 59)
+peso <- round(edad + edad*.2)
+sexo <- c('F', 'M', 'M', 'F', 'F')
+
+d <- data.frame(nombres, edad, peso, sexo)
+
+print(d)
+class(d)
+
+# write.csv(d, 'data.csv', row.names = FALSE)   para guardar a archivo 
+# read.csv("nombre del archivo", header = T or F si tiene nombres)  
+
+```
+
+
+```{r}
+dim(d) #5 filas x 4 columnas  
+# subsetting [] works the same as in matrices 
+# revisar como funciona select y filter 
+
+vec <- c("roberto", 70, 86, "M")
+names(vec) <- c("nombres", "edad", "peso", "sexo")
+datosN <- rbind(d,vec)
+datosN
+
+class(datosN$peso)
+```
+
+attach(df) sirve para poder accesar a las variables dentro de un df en el ambiente.  
+
+## Listas  
+
+La lista puede contener distintos tipos de datos, vectores, df, matrices. 
+```{r}
+x1 = 1:10
+
+x2 = matrix(1:12, ncol=3)
+
+l1 = list(x1, x2)
+l1
+
+#para hacer subsetting 
+l1[[2]][5]   #el primer double bracket es para acceder a los elementos de la lista
+
+l1[[2]][,3]   #columna 3 del elemento 2 
+
+
+l2 = list(a=x1, b=x2)
+
+l2
+l2$a
+l2$b[,3]
+
+l3 = list(l1,l2)
+l3
+
+l3[[2]][[1]][8] = 888  # si queremos cambiar uno de los numeros (segundo elemento,
+#primer item, posición 8)
+l3
+```
+
+Ejemplo para hacer una lista 
+
+```{r}
+library(jpeg)
+
+img1 <- readJPEG("imagen.jpeg")
+
+print(dim(img1))
+
+img1 = img1[,,1]
+
+#image(img1, col=gray.colors(255))
+# aqui se supone que fueran 2 imagenes distintas porque al final se accesan las 
+# listas de los elementos. 
+
+img2 <- readJPEG("imagen.jpeg")
+
+print(dim(img2))
+
+img2 = img2[,,2]
+
+#image(img2, col=gray.colors(255))
+
+var = list(img1, img2)
+
+#img = imrotate(var[[2]],90)
+
+image(var[[1]], col=gray.colors(255))
+
+var[[2]][500:1000,] = 1 #aqui queremos modificar agregando barras a la img.  
+image(var[[2]])
+```
+
+# Clase 09 - 5/09/22  
+
+### rep(), sample(), paste()
+
+rep() <- sirve para repetir.  
+rep(x, times = 1, length.out = NA, each = 1) DEFAULT.  
+                  length.out = para determinar la longitud 
+                                   each = repetir cada elemento del vector.   
+                                   
+```{r}
+rep(1:4, 2)   #de 1 a 4, repite 2 veces.   
+
+rep(1:4, each = 2)       #cada elemento dos veces. 
+
+rep(1:4, c(2,2,2,2))     #cada elemento dos veces, escrito de otra forma. 
+
+rep(1:4, c(2,1,2,1))    #especifica cúanto de cada elemento.  
+
+rep(1:4, each = 2, length.out = 4)   #len es igual a lenght.out  
+
+rep(1:4, each = 2, len = 10)   #si el tamaño es más grande, recicla el vector.  
+
+rep(1:4, each = 2, times = 3)  #cada uno dos veces, repite 3 veces el vector. 
+```
+                                   
+
+```{r}
+matrix(rep(0,12), ncol=2)   
+```
+
+
+### sample()  
+
+Para tomar una muestra.  
+sample(x, size, replace = FALSE, prob = NULL)  
+size= tamaño de la muestra.  
+replace= "regresa" los datos muestreados a la poblacion. 
+prob= asignar una probabilidad a cada elemento muestreado.  
+
+```{r, include=FALSE}
+x <- 1:12
+
+sample(x)  #saca los elementos de un vector, muestreados de forma aleatoria.  
+
+sample(x, replace = TRUE)  #como los valores se regresan al costal, pueden   
+#volver a salir en la muestra.   
+
+sample(c(0,1), 100, replace = TRUE)  #estamos simulando una distribucion binomial   
+```
+
+### paste()   
+paste (..., sep = " ", collapse = NULL, recycle0 = FALSE)   
+Sirve para concatenar strings.   
+Por default el separador es " " (un espacio).  
+
+
+```{r, include=FALSE}
+paste(1:12, collapse = " ")
+var
+#paste(month.abb, "is the", nth, "month of the year.")
+for (i in c(1:12) ){print(paste(month.abb[i], "is the", i, "month of the year."))}   #contribuido por isabel.  
+
+paste(month.abb, letters)
+
+
+paste("1st", "2nd", "3rd", sep = ", ")
+```
+
+Generar 10 nombres. 
+```{r}
+#para asignar nombres repetidos dentro de un vector. 
+var = paste("Juan", 1:10, sep="")
+var
+```
+
+
+#### Ejercicios de la clase   
+
+2) crear un df, guardarlo y leerlo. 
+```{r}
+nombres <- paste(paste("lupita", 1:12, sep=""), paste("Juan", 1:10, sep=""))
+nombres
+
+
+```
+
+```{r}
+nom = c("Juan", "Lupita")
+datos_nom = sample(nom,20,replace = T, prob = c(0.4,0.6))  
+#para no hacer un vector repetido, se pueden muestrar directamente. 
+datos_nom
+
+
+ih=1
+im=1
+for(i in 1:10){
+  if(datos_nom[1]=="Juan"){
+    datos_nom[i]= paste(datos_nom[i],ih,sep="")
+    ih=ih+1
+  }else{
+    datos_nom[i]= paste(datos_nom[i],im,sep="")
+    im=im+1
+  }
+}
+
+```
+
+
+# Clase 10  12 - 09 - 22   
+
+*Data.frames*  
+
+par = para ver los parametros gráficos que podemos agregar a un plot.  
+mfrow = para hacer múltiples plots en la misma ventana. 
+```{r}
+edad <- round(runif(20, min = 30, max = 60))
+pesoH <- round(rnorm(20, mean = 57, sd = 8)) 
+pesoM <- round(rnorm(20, mean = 50, sd = 5)) 
+
+par(mfrow=c(2,1))
+plot(pesoH, edad, main = "Medidas de infantes", xlab = "Peso (Kg)", ylab = "Edad (años)", pch = 16, col = "red")
+#agregamos los pesos de mujeres a la gráfica ya existente.
+#hacemos unas regresiones lineales de la edad x peso. 
+mod1 <- lm(edad~pesoH)   #peso de hombres 
+abline(mod1, lwd = 3, col = "blue")
+
+plot(pesoM, edad, pch=12, col="blue")
+mod2 <- lm(edad~pesoM)   #peso de mujeres
+abline(mod2, lwd= 3, col = "pink")
+```
+
+
+```{r}
+peso2 <- round(rnorm(40, mean = 55, sd = 7))
+sexo <- sample(c("F", "M"), 40, replace = T, prob = c(0.6, 0.4)) 
+
+boxplot(peso2 ~ sexo, col= c("red", "blue"))
+
+mF <- mean(peso2[sexo=="F"])
+mM <- mean(peso2[sexo=="M"])
+h <- barplot(c(mF, mM), ylim = c(0,80), names.arg = c("Mujeres", "Hombres"))
+#agregamos la desviacion estandar. 
+sdF = sd(peso2[sexo=="F"])
+sdM = sd(peso2[sexo=="M"])
+
+points(c(h[1],h[1]), c(mF-sdF, mF+sdF), lwd= 3, type = "l")
+points(c(h[2],h[2]), c(mM-sdM, mM+sdM), lwd= 3, type = "l")
+
+points(max(mF)+sdF, pch= "*")
+
+#agregamos un punto en el max 
+text(c(h[2],h[2]), mM+sdM+0.3, "*", col="red")
+
+```
+
+Ejercicio 3.  
+```{r}
+df <- iris
+class(df)
+summary(df)
+
+plot(df$Sepal.Length, col=df$Species, pch = 5, ylim = c(0.2,8))
+points(df$Sepal.Width, col=df$Species, pch = 6)
+points(df$Petal.Length, col=df$Species, pch = 7)
+points(df$Petal.Width, col=df$Species, pch = 8)
+```
+
+Hagamos un boxplot ahora  
+```{r}
+boxplot(df$Sepal.Length ~ df$Species, pch = 5, ylim = c(0.2,8))
+```
+
+```{r}
+attach(df)
+mSL_set = mean(Sepal.Length[Species=="setosa"])
+mSL_ver = mean(Sepal.Length[Species=="versicolor"])
+mSL_vir = mean(Sepal.Length[Species=="virginica"])
+mSW_set = mean(Sepal.Width[Species=="setosa"])
+mSW_ver = mean(Sepal.Width[Species=="versicolor"])
+mSW_vir = mean(Sepal.Width[Species=="virginica"])
+barplot(c(mSL_set, mSW_set, mSL_ver, mSW_ver, mSL_vir, mSW_vir), col= c("red", "blue", "green"))
+
+
+```
+
+
+```{r}
+summarise_at(df, vars(c(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width)), mean)
+```
+
+
+# Clase 11 19/9/22   
+
+Estadística descriptiva.  
+
+Medidas de tendencia central: 
+Media  
+La Mediana es más robusta que la media?  
+Moda  
+
+```{r}
+x <- c(2,3,4,5,2)
+mean(x)
+median(x)
+var(x)
+sd(x)
+range(x)
+quantile(x)
+```
+
+
+### Medida de simetría SKEWNESS   
+```{r}
+simetria <- function (x = 0){
+  mx = mean(x)
+  sd1 = sd(x)
+  n = length(x)
+  num = (sqrt(n) * sum((x - mx)^3))
+  den = (n-1) * sqrt(n-1) * sd1^3
+  si = num/den
+}
+```
+
+
+```{r}
+dd = rnorm(20)
+plot(dd)
+(simetria(dd))
+```
+
+```{r}
+d = rchisq(10,5)
+plot(d, type = "h")
+(simetria(d))
+```
+
+```{r}
+ddd <- c(5, 5, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 11, 11)
+hist(ddd)
+(simetria(ddd))
+mean(ddd)
+median(ddd)
+```
+
+### Kurtosis   
+
+Nos dice que tan picuda es la distr. de nuestros datos con respecto a una  
+distribución normal estándar.   
+
+```{r}
+kurt <- function (x=0){
+  mx <- mean(x)
+  std <- sd(x)
+  n = length(x)
+  num = n* sum((x-mx)^4)
+  den = (n-1)^2 * std^4
+  kur <- num/den -3
+}
+```
+
+```{r}
+(kurt(ddd))
+```
+
+Inter quartile range (IQR) = 3rd Qrt - 1st quart  
+```{r}
+IQR(ddd)
+```
+
+### Repaso de gráficas   
+
+```{r}
+x = seq(0, 2*pi, 0.5)
+y = sin(x)
+z = 2 * sin(x)
+mat = matrix(c(x,y,z), ncol = 2)
+
+plot(mat, pch = 16)
+```
+
+
+
+## Clase 12   26 -sep-22   
+
+n!   es todas las formas que puede ordenarse los datos.
+3! = 3x2x1  
+ABC
+ACB
+BCA
+CBA
+CAB
+BAC
+
+
+n^n   cuantos ordenamientos pueden hacerse con repetición
+3^3=27
+AAA
+AAB
+AAC
+BBA
+...
+
+
+
+n! / (n-r)^2   en estos si se puede repetir AB-BA
+Dado n letras, de cuantas maneras puedo ordenar r letras de n, con r < n.  
+
+Dado r sillas, de cuántas maneras puedo sentar a n personas.  
+-n * (n-1) * ... * (n-r) = n!/(n-r)!  
+
+ej 6 personas y 4 sillas 
+
+6*5*4*3 = 6!(6-4)! = 6*5*4*3*2*1/2*1
+
+n!/r!(n-r!)   en este no hay repeticiones??  
+Dado 6 personas de cuántas maneras puedo combinar 4 personas.   
+
+```{r}
+x <-  0  #define factorial.   
+
+factorial1 <- function(x){
+  l <- letters[1:x]
+  s <- strsplit(l)
+  
+} 
+  
+  
+
+```
+
+
+```{r}
+ej1 <- read.csv("Daniel_Ejercicios/EXA_C01_S04_01.csv", header = T)
+head(ej1)
+dim(ej1)
+summary(ej1)
+IQR(ej1$AGE)
+hist(ej1$AGE, ylim = c(0,60))
+```
+
+
+```{r}
+ss = c()
+ff = c()
+for (i in 1:10){
+  m = sample(ej1$AGE, 10)
+  cat("muestra", i, "mean=", mean(m), "sd=", sd(m))
+  ss = c(ss,m)
+  ff = c(ff,rep(i,10))
+}
+cat("population mean=", mean(ej1$AGE), "sd=", sd(m))
+
+boxplot(ss ~ as.factor(ff))
+```
+
+```{r}
+ej3 <- data.frame(ss,ff)
+```
+
+
+
+```{r}
+factor = rep(1:10, each = 10)
+muestra = sample(ej1$AGE, 100, replace = F)
+datos <- data.frame(factor, muestra)
+```
+
+```{r}
+boxplot(muestra ~ as.factor(factor))
+points(sd(muestra ~ factor), col = "red")
+```
+
+```{r}
+mat = matrix(muestra, ncol= 10)
+med = apply(mat,2,mean)
+sd1 = apply(mat,2,sd)
+err = sd1/sqrt(10)
+```
+
+```{r}
+b = barplot(med, ylim = c(0,100))
+for(i in 1:10){
+  points( c(b[i],b[i]), c(med[i]-err[i]+err[i], type = "l", col= "red")      )
+}
+```
+
+
+```{r}
+h1 <- hist(ej1$AGE,breaks=6, right = F)
+h1
+points(h1$mids, h1$counts, type = "b", col = "red")
+#esta es la tabla 2.3.2
+cumsum(h1$counts)   #frecuencia cumulativa
+h1$counts / length(ej1$AGE)  #esta es la frecuencia relativa 
+
+stem(ej1$AGE, scale = 3)
+                 
+```
+
+Hacer a partir de 2.4 hasta 2.5.1 incluyendo skewness. Antes del proximo lunes.   
+
+
+## Clase 3 de Oct  Distribuciones de probabilidad.   
+
+```{r}
+sd1 = 5
+med = 55
+
+x = seq(med-20, med+20, 0.1)
+
+w = (x-med)^2 / (2*sd1^2)
+fi = exp(-w)/(sd1*sqrt(2*pi))
+plot(x,fi,type="l")
+```
+
+El area bajo la curva de una distribución normal estándar es = 1. (0.5 a cada  
+lado de la media).  
+
+Función dnorm para generar distribuciones. 
+
+La grafica azul es la probabilidad acumulada de la distribucion std.  el eje y  
+muestra la probabilidad. 
+```{r}
+x = seq(med-20, med+20, 0.1)
+sd = 1 
+med = 55
+
+fi = dnorm(x, mean = med, sd = sd1)
+par(mfrow= c(2,2))
+plot(x,fi, type= "l")
+nale = rnorm(50, mean = med, sd = sd1)
+plot(nale, pch = 13, col = "blue")
+
+qq = pnorm(x, mean = med, sd = sd1)
+plot(x,qq, type = "l", col="blue", ylim = c(0,1))
+
+p = seq(0,1,0.01)
+q = qnorm(p)
+plot(p,q,type="l", col="green")
+```
+
+Sea x una var. aleatoria que tiene la forma de una dist. normal con u=55 y sd=10.  
+1) Cuál es la prob. de tener un elemento de la variable aleatoria cuyo valor sea  
+mayor que 55?  
+```{r}
+1 - pnorm(55, mean = 55, sd = 10)
+```
+
+
+Esta es una distribucion discreta. 
+```{r}
+x = seq(-20,20)
+y = dbinom(x, 20, prob = 0.5)
+par(mfrow=c(2,2))
+plot(x,y, pch = 16)
+
+r = rbinom(20, 2, prob = 0.7)
+plot(r)
+
+p = pbinom(x, 2, prob = 0.7)
+plot(p)
+
+q = qbinom(p, 2, prob = 0.7)
+plot(q)
+```
+La suma de las frecuencias debe ser = 1
+
+```{r}
+p = round(rnorm(20 , mean = 55, sd = 5))
+h = hist(p)
+y = table(p)
+y
+
+p = as.numeric(y)
+p = p/sum(p)
+p
+
+#suma de frecuencia acumulada
+fpa = cumsum(p)
+fpa
+```
+
+
+## Clase 14 5 oct 22    
+
+La gráfica es una distribución de probabilidad, muestra la prob de que la suma  
+de dos dados de X valor. Esta es equivalente a una graf dnorm.   
+Recordar que la pbinom es una distribución discreta, a diferencia de la pnorm  
+que es contínua.  
+
+
+
+
+```{r}
+x = c(2,3,4,5,6,7,8,9,10,11,12)
+frec = c(1,2,3,4,5,6,5,4,3,2,1)
+prob = frec/36
+pa = cumsum(prob)
+barplot(prob, names.arg = x)
+barplot(cumsum(prob), names.arg = x)
+```
+
+Probabilidades acumuladas=  
+```{r}
+#x = 1 
+#cero porque no se puede sumar 1 
+# x = 2 
+pa[1]
+# x = 2 O x=5 -> P(x=2)+P(x=5) -> pa[1] + pa[4] - pa[3]
+pa[1]+pa[4]-pa[3]
+# P(x<4)
+pa[2]
+# P(x>=6)
+1-pa[4]
+# toma cualquier valor 
+1
+
+```
+
+Probabilidad para una tirada de moneda.  
+```{r}
+#A) salga una cara = 0.0756
+#posibles combinaciones: CSSS, SCSS, SSCS, SSSC  
+#las combinaciones son (4,1) = 4!/1! * (4-1)! = 4
+4 * 0.7 * 0.3^3
+#usamos qbinom = probabilidad binomial. 
+#este nos da la frecuencia acumulada
+pbinom(1,4,prob = 0.7) - pbinom(0,4,prob = 0.7)
+#sale 1 cara, en cuatro tiradas, y le restamos cuando salen 0 caras
+
+#B) salgan DOS caras = 
+# CCSS, CSCS, CSSC, SCCS, SCSC, SSCC
+#combinaciones son (4,2) = 4!/ 2! * (4-2)! = 6
+6 * (0.7)^2 *(0.3)^2
+pbinom(2, 4, prob = 0.7)-pbinom(1,4,prob = 0.7)
+
+
+#C) salgan máx 3 caras. 
+pbinom(3,4,prob = 0.7)
+
+#D) NO salgan 1 o 2 caras. 
+1 - pbinom(2, 4, prob = 0.7) + pbinom(0,4,prob = 0.7)
+#aqui le restamos la prob de 2 y le sumamos la prob de 0 caras 
+
+# 3 graficar la distribucion de prob. del numero de caras sacadas. 
+caras = c(0,1,2,3,4)
+
+d <- dbinom(caras, 4, prob = 0.7)
+d
+barplot(d, names.arg = caras)
+barplot(cumsum(d))
+```
+
+Ejemplos de distribuciones.  
+
+El ABC (área bajo la curva) de la normal es = 1
+```{r}
+x <- seq(-5,5,0.1)
+a = dnorm(x)
+par(mfrow = c(2,2))
+plot(x,a, type = "h", col = "blue")
+
+#frec acumulada 
+p = pnorm(x)
+plot(x,p, type = "b", col = "green")
+# en (0,0.5) es la mitad de la distr. normal
+
+t = seq(0,1,0.01)
+z = qnorm(t)
+plot(t,z, type = "l", col = "red")
+
+#distr aleatoria
+plot(rnorm(50), col = "purple")
+shapiro.test(rnorm(50))
+
+```
+Leer cap 4 y 5 de Daniels.  
+
+
+## Clase 15 Oct   
+
+P[X = x] = (x->n) * p^x * (1-p)^(n-x)  
+(x->n) = n combinación de x   
+x = evento exitoso (p. ej)
+n = total de eventos  
+p^x = probabilidad ^ x  
+
+
+```{r}
+n=20
+x = 0:n
+ 
+d1 = dbinom(x, n, .5)
+
+plot(x,d1, pch=16, col='blue', xlim=c(0,40), ylim=c(0, .25))
+
+d2 = dbinom(x, n, .7)
+points(x,d2, pch=16, col='green')
+
+d3 = dbinom(0:40, 40, .5)
+points(0:40,d3, pch=16, col='red')
+
+pd1 = cumsum(d1)
+pd2 = cumsum(d2)
+pd3 = cumsum(d3)
+
+plot(x, pd1, pch=16, col='blue', xlim=c(0,40), ylim=c(0, 1))
+points(x, pd2, pch=16, col='green')
+points(0:40, pd3, pch=16, col='red')
+```
+
+Recordar que con pbinom podemos calcular la probabilidad directamente, en vez  
+de visualizar con dbinom (densidad). La segunda gráfica es la p acumulada, por  
+eso le restamos x-1 para remover el punto anterior. 
+```{r}
+n = 20 
+x = 10 
+p = 0.5
+pbinom(x,n,p)-pbinom(x-1,n,p)
+```
+
+
+### Distr. de Densidad Normal.  
+
+```{r}
+x1 = -5
+x2 = 5
+x = seq(x1, x2, .1)
+ 
+d1 = dnorm(x, mean=0, sd=sqrt(.2))
+d2 = dnorm(x, mean=0, sd=sqrt(1))
+d3 = dnorm(x, mean=0, sd=sqrt(5))
+d4 = dnorm(x, mean=-2, sd=sqrt(.5))
+
+plot(x,d1, col='blue', xlim=c(x1,x2), ylim=c(0, 1), type='l')
+points(x,d2, col='red', type='l')
+points(x,d3, col='green', type='l')
+points(x,d4, col='brown', type='l')
+
+pd1 = cumsum(d1)/sum(d1)
+pd2 = cumsum(d2)/sum(d2)
+pd3 = cumsum(d3)/sum(d3)
+pd4 = cumsum(d4)/sum(d4)
+
+plot(x, pd1, col='blue', xlim=c(x1, x2), ylim=c(0, 1.1), type='l')
+points(x,pd2, col='red', type='l')
+points(x,pd3, col='green', type='l')
+points(x,pd4, col='brown', type='l')
+```
+Aquí las gráficas tienen la misma media pero distinta sd.  
+La segunda graf (pnorm) muestra que la prob. de x=0 es 0.5, lo cual representa  
+el 50% del área bajo la curva 
+
+Para una distribucion normal std. calcular la prob de :  
+```{r}
+#P (x < -1)
+pnorm(-1)
+#P (x < 0)
+pnorm(0)
+#P (x > 1)  = 1 - P(x<1)
+1 - pnorm(1)
+#P(-1<x<1)
+pnorm(1)-pnorm(-1)
+```
+
+Supongamos que p = 0.5   ¿Cuál es el valor de x0 tal que P(x < x0) = 0.5?
+```{r}
+qnorm(0.5, mean = 0)
+```
+Ahora para P(x < x0) = 0.8 y 0.1  
+```{r}
+qnorm(0.8, mean = 0)
+qnorm(0.1)
+```
+
+```{r}
+x = round(rnorm(20, mean = 55, sd = 10))
+y = (x - mean(x))/sd(x)
+mean(y)
+sd(y)
+plot(x,y)
+```
+
+Ejercicio.  
+Supon una poblacion u=55 sd=10. 
+P(x < 40) = P((x-55)/10) = P(x < (40-55)/10)
+```{r}
+pnorm((40-55)/10)
+```
+Esto es equivalente a normalizar la desviación a una u=0 y sd=1.  
+
+### Otras funciones.   
+lapply.  
+```{r}
+a <- list(1:5, c(2,3,4,5))
+a
+lapply(a, mean) # este regresa una lista 
+sapply(a, mean) # regresa un vector 
+```
+
+
+tapply es para valores categóricos.  
+```{r}
+Y = round(runif(12, min = 50, max = 60))
+fac = as.factor(sample(c("H","M"), 12, replace = T))
+
+tapply(Y, fac, max)
+```
+
+Esta funcion puede ser estratificada usando dos factores O TRES?.   
+```{r}
+tapply(mtcars$mpg, list(mtcars$cyl,mtcars$gear), max)
+```
+
+
+### Intervalos de confianza.  
+Grados de libertad se relacionan con el numero de variables independientes.  
+```{r}
+z = seq(-5,5,0.1)
+D = dt(z,5) #Distribución T, requiere un vector, grados de lib
+par(mfrow = c(2,1), bg = "grey")
+plot(z,D,type="l")
+
+P = pt(z,5)
+plot(z,P,type = "l")
+```
+### Estimación de la media poblacional.  
+
+El intervalo de confianza con nivel de confianza con probabilidad P esta dado por:  
+
+```{r}
+muestra = c(55,50,57,60,52,57,62)
+res = t.test(muestra, mu = 55)
+res
+
+#Esta parte está pendiente de revisar.    
+mean(muestra) - qt(1-0.5/2,6)*sd(muestra)/sqrt(7)
+ggplot2::mean_se(muestra)
+```
+
+## Clase 16   12 oct 22   
+
+Cuando se tienen distr. de probabilidad continua, debe usarse la prob acumulada.  
+
+```{r}
+progs <- c(1,2,3,4,5,6,7,8)
+peop <- c(62, 47, 39, 39, 58, 37, 4, 11)
+total <- sum(peop)
+prob <- peop/total
+prob
+
+barplot(prob, names.arg=progs)
+hist(prob)
+prob_ac <- cumsum(prob)
+
+#cuál es la prob de que una familia use 3 programas de ayuda?  
+prob_ac[3] - prob_ac[2]
+# p de que usen 1 o 2 programas?
+prob_ac[2]
+#p de que usen menos de 4 progr
+prob_ac[3]
+#p de que usen 5 o más prog. Aquí el 5 es inclusivo entonces usamos indice 4
+1 - prob_ac[4]
+#p de que usen entre 3 y 5 
+prob_ac[5]-prob_ac[2]
+```
+
+### The binomial distribution.  
+
+ejemplo 4.3.1
+```{r}
+pbinom(3,5, prob = 0.858) - pbinom(2,5, prob = 0.858)
+```
+
+Poisson distr. 
+La distrb. de poisson es discreta, y nos habla de la probabilidad de que ocurra  
+un evento en una ventana de tiempo. 
+```{r}
+ppois(3,12) - ppois(2,12)
+```
+
+### Normal  
+4.6  
+```{r}
+#aqui calculamos la media + 1 sd 
+pnorm(1) - pnorm(-1)
+# aqui sacamos con 2sd ( este es el del lado derecho), el del izq es pnorm(-2)
+1 - pnorm(2)
+#
+```
+
+4.6.7.
+Area bajo la curva desde z= -Inf a z=2
+```{r}
+pnorm(2)
+```
+
+4.6.2 Prob that a picked z will have values between -2.55 and 2.55
+```{r}
+pnorm(2.55) - pnorm(-2.55)
+```
+4.6.3
+```{r}
+pnorm(1.57) - pnorm()
+```
+
+```{r}
+1 - pnorm(2.712)
+```
+
+
+4.7 Normal dist applications  
+*The upstander*  
+```{r}
+pnorm(3, mean = 5.4, sd = 1.3)
+#cuando se convierte esta a una distr. normal std se puede hacer directamente, 
+#aqui usamos z = x-u / sd
+pnorm(-1.85)
+```
+
+4.7.2  
+Concentracion de amoniaco en el aliento.   
+```{r}
+pnorm(649, mean = 491, sd = 119) - pnorm(292, mean = 491, sd = 119)
+
+pnorm(1.33) - pnorm(-1.67)
+```
+
+```{r}
+library(jpeg)
+
+```
+
+
+
+
