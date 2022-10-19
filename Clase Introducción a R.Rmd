@@ -1519,6 +1519,19 @@ ejemplo 4.3.1
 pbinom(3,5, prob = 0.858) - pbinom(2,5, prob = 0.858)
 ```
 
+4.3.2. Esta probabilidad está correcta. 
+```{r}
+pbinom(4,10, prob = 0.14) - pbinom(3,10, prob = 0.14)
+```
+
+4.3.3  
+```{r}
+#a) five or fewer
+pbinom(5,25, prob = 0.1)
+#b) Six or more  Aqui como es inclusivo se toma hasta 5??
+1- pbinom(5,25, prob = 0.1)
+```
+
 Poisson distr. 
 La distrb. de poisson es discreta, y nos habla de la probabilidad de que ocurra  
 un evento en una ventana de tiempo. 
@@ -1546,11 +1559,11 @@ pnorm(2)
 ```{r}
 pnorm(2.55) - pnorm(-2.55)
 ```
-4.6.3
+4.6.3 -2.74 < z < 1.53
 ```{r}
-pnorm(1.57) - pnorm()
+pnorm(1.57) - pnorm(-2.74)
 ```
-
+4.6.4 P >= 2.71   
 ```{r}
 1 - pnorm(2.712)
 ```
@@ -1578,6 +1591,90 @@ library(jpeg)
 
 ```
 
+## Clase 17 17 oct 22  
+
+### Distribución de la media muestral   
+
+Cuando calculamos la prob de una muestra, tenemos que agregar el tamaño muestral  
+a la sd.  sd = sd/sqrt(n).  
+ex 5.3.2  
+Human population with aprox normal cranial lenght. Prob that someone has >190  
+```{r}
+1 - pnorm(190, mean = 185.6, sd = 12.7/sqrt(10))
+```
+
+5.3.3.  
+```{r}
+pnorm(125, mean = 120, sd = 15/sqrt(50))
+```
+
+5.4.1  
+aqui hacemos la diferencia entre medias muestrales 
+retrasados = 92  normales = 105 
+```{r}
+1 - pnorm(105-92, mean = 0, sd = sqrt(53.33))
+```
+
+5.4.2  
+```{r}
+1 - pnorm(20, mean = 45-30, sd = sqrt(15^2/35 + 20^2/40))
+```
+
+### Análisis de imagen 2  
+
+```{r}
+library(png)
+i1 <- readPNG("img2.png")
+```
+
+```{r}
+dim(i1)
+i2 = i1[,,1]
+dim(i2)
+image(i2, col = gray.colors(255))
+```
+```{r}
+hist(i2)
+```
+Haciendo la suma de los pixeles sale directo el área de los 4 círculos pequeños.  
+Mi tarea se acercó bastante.  
+
+```{r}
+imgB <- i2 < 0.9 & i2 > 0.7
+image(imgB, col= gray.colors(255))
+sum(imgB)
+
+```
+
+
+```{r}
+plot(1:2, type = "n")
+rasterImage(i1, 1,1,1.3,1.5)
+```
+
+programa para encontrar círculos???
+```{r}
+f2 <- function(i0 = 0, j0 = 0){
+  imgB[i0,j0] = 0
+  for((i0-1):(i0+1) {
+    for ((j0-1):(j0+1)){
+      if(i2[i0,j0] == 1){
+        s
+      }
+    }
+    
+  }
+  if (n <= 0){
+    ret = 1
+  } else {
+    ret = n*f2(n-1)
+  }
+}
+```
+
+```{r}
+(f2(5))
+```
 
 
 
